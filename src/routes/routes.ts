@@ -84,6 +84,9 @@ router.get("/swapi/:id", async (req, res) => {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
           species[i] = retorno.data.name
         }
+        /*delete data.created
+        delete data.edited
+        delete data.url*/
         data.species = species
       }
 
@@ -92,9 +95,15 @@ router.get("/swapi/:id", async (req, res) => {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
           films[i] = retorno.data.title
         }
+        /*delete data.created
+        delete data.edited
+        delete data.url*/
         data.films = films
       }
 
+      delete data.created
+      delete data.edited
+      delete data.url
 
       res.status(status).send(data);
   

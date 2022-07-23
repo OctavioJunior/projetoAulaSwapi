@@ -85,6 +85,9 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 species[i] = retorno.data.name;
             }
+            /*delete data.created
+            delete data.edited
+            delete data.url*/
             data.species = species;
         }
         if (films) {
@@ -92,8 +95,14 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 films[i] = retorno.data.title;
             }
+            /*delete data.created
+            delete data.edited
+            delete data.url*/
             data.films = films;
         }
+        delete data.created;
+        delete data.edited;
+        delete data.url;
         res.status(status).send(data);
     }
     catch (error) {
