@@ -30,7 +30,7 @@ router.get("/swapi/:id", async (req, res) => {
       let vehicles = data.vehicles
       let species = data.species
       let films = data.films
-
+      
       if (characters) {
         for(const [i, e] of characters.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -38,7 +38,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.characters = characters
       }
-
       if (people) {
         for(const [i, e] of people.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -46,7 +45,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.people = people
       }
-
       if (residents) {
         for(const [i, e] of residents.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -54,7 +52,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.residents = residents
       }
-
       if (planets) {
         for(const [i, e] of planets.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -62,7 +59,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.planets = planets
       }
-
       if (starships) {
         for(const [i, e] of starships.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -70,7 +66,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.starships = starships
       }
-
       if (vehicles) {    
         for(const [i, e] of vehicles.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -78,7 +73,6 @@ router.get("/swapi/:id", async (req, res) => {
         }
         data.vehicles = vehicles
       }
-
       if (species) {
         for(const [i, e] of species.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -89,7 +83,6 @@ router.get("/swapi/:id", async (req, res) => {
         delete data.url*/
         data.species = species
       }
-
       if (films) {
         for(const [i, e] of films.entries()) {
           const retorno = await api.get(`/${e.split("api/")[1]}`)
@@ -100,13 +93,13 @@ router.get("/swapi/:id", async (req, res) => {
         delete data.url*/
         data.films = films
       }
-
+      
       delete data.created
       delete data.edited
       delete data.url
-
+      
       res.status(status).send(data);
-  
+    
     } catch (error: any) {
       status = 404;
       res.status(status).send({
