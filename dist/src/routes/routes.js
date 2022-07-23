@@ -31,11 +31,69 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
         const result = yield apiSwapi_1.default.get(`/${param}/${id}`);
         let data = result.data;
         let characters = data.characters;
-        for (const [i, e] of characters.entries()) {
-            const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
-            characters[i] = retorno.data.name;
+        let people = data.people;
+        let residents = data.residents;
+        let planets = data.planets;
+        let starships = data.starships;
+        let vehicles = data.vehicles;
+        let species = data.species;
+        let films = data.films;
+        if (characters) {
+            for (const [i, e] of characters.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                characters[i] = retorno.data.name;
+            }
+            data.characters = characters;
         }
-        data.characters = characters;
+        if (people) {
+            for (const [i, e] of people.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                people[i] = retorno.data.name;
+            }
+            data.people = people;
+        }
+        if (residents) {
+            for (const [i, e] of residents.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                residents[i] = retorno.data.name;
+            }
+            data.residents = residents;
+        }
+        if (planets) {
+            for (const [i, e] of planets.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                planets[i] = retorno.data.name;
+            }
+            data.planets = planets;
+        }
+        if (starships) {
+            for (const [i, e] of starships.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                starships[i] = retorno.data.name;
+            }
+            data.starships = starships;
+        }
+        if (vehicles) {
+            for (const [i, e] of vehicles.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                vehicles[i] = retorno.data.name;
+            }
+            data.vehicles = vehicles;
+        }
+        if (species) {
+            for (const [i, e] of species.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                species[i] = retorno.data.name;
+            }
+            data.species = species;
+        }
+        if (films) {
+            for (const [i, e] of films.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                films[i] = retorno.data.title;
+            }
+            data.films = films;
+        }
         res.status(status).send(data);
     }
     catch (error) {
