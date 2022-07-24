@@ -33,7 +33,9 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
         let characters = data.characters;
         let people = data.people;
         let residents = data.residents;
+        let pilots = data.pilots;
         let planets = data.planets;
+        let homeworld = data.homeworld;
         let starships = data.starships;
         let vehicles = data.vehicles;
         let species = data.species;
@@ -51,6 +53,13 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 people[i] = retorno.data.name;
             }
             data.people = people;
+        }
+        if (pilots) {
+            for (const [i, e] of pilots.entries()) {
+                const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
+                pilots[i] = retorno.data.name;
+            }
+            data.pilots = pilots;
         }
         if (residents) {
             for (const [i, e] of residents.entries()) {
@@ -73,7 +82,7 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
             }
             data.starships = starships;
         }
-        if (vehicles) {
+        if (vehicles) { // APARTIR ID = 4
             for (const [i, e] of vehicles.entries()) {
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 vehicles[i] = retorno.data.name;
@@ -85,9 +94,6 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 species[i] = retorno.data.name;
             }
-            /*delete data.created
-            delete data.edited
-            delete data.url*/
             data.species = species;
         }
         if (films) {
@@ -95,10 +101,12 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 films[i] = retorno.data.title;
             }
-            /*delete data.created
-            delete data.edited
-            delete data.url*/
             data.films = films;
+        }
+        if (homeworld) {
+            let idPlaneta = data.homeworld.substring(30);
+            let planetName = yield apiSwapi_1.default.get(`/planets/${idPlaneta}`);
+            data.homeworld = planetName.data.name;
         }
         delete data.created;
         delete data.edited;
