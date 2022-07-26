@@ -19,16 +19,17 @@ const apiSwapi_1 = __importDefault(require("./../services/apiSwapi"));
 let status = 200;
 router.get("/", (req, res) => {
     res.status(status).send({
-        message: "Olá Pessoa",
+        message: "Olá pequeno jedi!!!",
         status: status,
     });
 });
-router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const param = req.query.param;
+    const param = req.query.categoria;
     try {
         status = 200;
         const result = yield apiSwapi_1.default.get(`/${param}/${id}`);
+        //                  swapi.dev/api/films/1
         let data = result.data;
         let characters = data.characters;
         let people = data.people;
@@ -75,7 +76,12 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
             }
             data.planets = planets;
         }
-        if (starships) {
+        if (homeworld) {
+            let idPlanet = data.homeworld.substring(30);
+            let planetName = yield apiSwapi_1.default.get(`/planets/${idPlanet}`);
+            data.homeworld = planetName.data.name;
+        }
+        if (starships) { // APARTIR ID = 4
             for (const [i, e] of starships.entries()) {
                 const retorno = yield apiSwapi_1.default.get(`/${e.split("api/")[1]}`);
                 starships[i] = retorno.data.name;
@@ -102,11 +108,6 @@ router.get("/swapi/:id", (req, res) => __awaiter(void 0, void 0, void 0, functio
                 films[i] = retorno.data.title;
             }
             data.films = films;
-        }
-        if (homeworld) {
-            let idPlaneta = data.homeworld.substring(30);
-            let planetName = yield apiSwapi_1.default.get(`/planets/${idPlaneta}`);
-            data.homeworld = planetName.data.name;
         }
         delete data.created;
         delete data.edited;
