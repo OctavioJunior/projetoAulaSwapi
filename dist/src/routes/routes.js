@@ -23,9 +23,10 @@ router.get("/", (req, res) => {
         status: status,
     });
 });
-router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const param = req.query.categoria;
+router.get("/:categoria/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //const id = req.params.id;
+    //const param: any = req.params.categoria;
+    const { id, categoria } = req.params;
     const categoryList = [
         "people",
         "films",
@@ -34,15 +35,16 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         "planets",
         "species"
     ];
-    const categoryCheck = categoryList.some(elem => elem === param);
+    const categoryCheck = categoryList.some(elem => elem === categoria);
+    //const categoryCheck = categoryList.includes(param)
     if (!categoryCheck) {
-        res.status(status).send(`Categoria não existe, tente uma destas: ${categoryList.toString()}`);
+        res.status(status).send(`Categoria não existe, tente uma destas: ${categoryList.join(', ')}`);
         return;
     }
     try {
         status = 200;
-        const result = yield apiSwapi_1.default.get(`/${param}/${id}`);
-        //                  swapi.dev/api/films/1
+        const result = yield apiSwapi_1.default.get(`/${categoria}/${id}`);
+        //                   swapi.dev/api/films/1
         let data = result.data;
         let characters = data.characters;
         let people = data.people;
@@ -74,11 +76,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 pilots[i] = retorno.data.name;
             }
             if (pilots.length) {
-                console.log("pilots is not null");
                 data.pilots = pilots;
             }
             else {
-                console.log("pilots is empty");
                 delete data.pilots;
             }
         }
@@ -88,11 +88,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 residents[i] = retorno.data.name;
             }
             if (residents.length) {
-                console.log("residents is not null");
                 data.residents = residents;
             }
             else {
-                console.log("residents is empty");
                 delete data.residents;
             }
         }
@@ -114,11 +112,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 starships[i] = retorno.data.name;
             }
             if (starships.length) {
-                console.log("starships is not null");
                 data.starships = starships;
             }
             else {
-                console.log("starships is empty");
                 delete data.starships;
             }
         }
@@ -128,11 +124,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 vehicles[i] = retorno.data.name;
             }
             if (vehicles.length) {
-                console.log("Vehicles is not null");
                 data.vehicles = vehicles;
             }
             else {
-                console.log("Vehicles is empty");
                 delete data.vehicles;
             }
         }
@@ -142,11 +136,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 species[i] = retorno.data.name;
             }
             if (species.length) {
-                console.log("species is not null");
                 data.species = species;
             }
             else {
-                console.log("Vehicles is empty");
                 delete data.species;
             }
         }
